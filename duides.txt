@@ -1,0 +1,22 @@
+   =======BLOOOD DOANATE SYSTEM======
+
+   ===USERS==
+   1. ADMIN
+   2. DONATOR
+   3. RECIPIENT
+
+        //////////////FUNCTIONS//////
+
+        DONATOR=[
+            =>Donate bloods
+        ]
+
+        RECIPIENT=[
+            => receive bloods
+        ]
+
+        RECIPIENTS can be||
+            =>hospital
+            =>pharmacy
+
+        NB DONATOR Must be Individual user

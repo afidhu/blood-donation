@@ -1,0 +1,332 @@
+{% extends 'base.html' %} {% block content %} {% comment %} model add donoer {%
+endcomment %}
+
+<!-- Button trigger modal -->
+{% comment %}
+<button
+  type="button"
+  class="btn btn-primary"
+  data-bs-toggle="modal"
+  data-bs-target="#adddonors"
+>
+  Launch demo modal
+</button>
+{% endcomment %}
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="adddonors"
+  tabindex="-1"
+  aria-labelledby="adddonorsLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="adddonorsLabel">Add donnor</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %} {{form.as_p}}
+
+          <button type="submit" class="btn btn-success mt-2">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} model add recipient {% endcomment %}
+
+<div
+  class="modal fade"
+  id="addrecipient"
+  tabindex="-1"
+  aria-labelledby="addrecipient"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="adddonorsLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+          {% csrf_token %} {{ forms_rp.media }} {{forms_rp.as_p}}
+          <button type="submit" class="btn btn-success mt-2">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+reciever_view {% comment %} modelr request view {% endcomment %}
+
+<div
+  class="modal fade"
+  id="requestview"
+  tabindex="-1"
+  aria-labelledby="request"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="adddonorsLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead>
+              <tr>
+                <th>S/N</th>
+                <th>name</th>
+                <th>blood_type</th>
+                <th>quantity</th>
+                <th>status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for data in reciever_view %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{data.recipient_name.username}}</td>
+                <td>{{data.blood_type}}</td>
+                <td>{{data.quantity}}</td>
+                <td>
+                  {% if data.is_complete %}
+                  <a href="{%url 'completed' data.id %}" class="mx-2">
+                    <span class="btn btn-danger"> Completed </span>
+                  </a>
+                  {% else %}
+                  <a href="{%url 'completed' data.id %}" class="mx-2">
+                    <span class="btn btn-primary"> Pending </span>
+                  </a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div
+              class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+            >
+              <h5>DOnors</h5>
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">
+              NO: {{donor}}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-plus text-success"></i>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#adddonors"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div
+              class="text-xs font-weight-bold text-success text-uppercase mb-1"
+            >
+              <h5>Recipent</h5>
+            </div>
+
+            <div class="h5 mb-0 font-weight-bold text-gray-800">
+              NO: {{receiver}}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-plus"></i>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#addrecipient"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+              <h5>Blood</h5>
+            </div>
+            <div class="row no-gutters align-items-center">
+              <div class="col-auto">
+                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                  <head>
+                    VOLUMES:
+                  </head>
+                  {{totalblood}}M<sup>3</sup>
+                </div>
+              </div>
+              <div class="col">
+                <div class="progress progress-sm mr-2">
+                  <div
+                    class="progress-bar bg-info"
+                    role="progressbar"
+                    style="width: 50%"
+                    aria-valuenow="50"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pending Requests Card Example -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div
+              class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+            >
+              <h5>Requests</h5>
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">
+              SN: {{receiver}}
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-eye"></i>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#requestview"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Blood details</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>username</th>
+            <th>Last login:</th>
+            <th>Status:</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in alluser %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{data.username}}</td>
+
+            <td>{{data.last_login}}</td>
+            <td>
+              {% if data.is_active %}
+              <a href="{%url 'managemyuser' data.id %}" onclick="return confirm('Are sure you want to Deactive user??')" class="mx-2">
+                <span class="btn btn-success">
+                  Active
+                </span>
+              </a>
+
+              {% else %}
+              
+              <a
+              href="{%url 'managemyuser' data.id %}"
+              >
+              <span class="btn btn-danger">
+             Inactive
+              </span>
+            </a>
+            {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Content Row -->
+
+{% endblock content %}
